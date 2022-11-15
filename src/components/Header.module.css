@@ -1,0 +1,59 @@
+.header {
+  background: yellow;
+  height: 75px;
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.text {
+  display: flex;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 25px;
+}
+
+.menuIcon {
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 30px;
+}
+
+.sidebar{
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: yellow;
+    width: 200px;
+    z-index: 16;
+    list-style: none;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+}
+.list {
+    border-bottom: 1px solid rgba(0,0,0, .3);
+    text-align: center;
+}
+
+.sideBarItems{
+    font-weight: 600;
+    text-decoration: none;
+    color: black;
+}
+.closeHeader{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.icon{
+    cursor:pointer;
+}
