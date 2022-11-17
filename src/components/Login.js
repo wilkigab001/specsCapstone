@@ -1,15 +1,13 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import AuthContext from "../store/authContext";
+import Button from "./Button/Button";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [register, setRegister] = useState(true);
 
-  const [status, setStatus] = useState(false);
-  const [type, setType] = useState("Error");
-  const [title, setTitle] = useState("This is a alert");
 
   let authCtx = useContext(AuthContext);
 
@@ -30,6 +28,7 @@ const Login = () => {
         .then((res) => {
           console.log(res.data);
           authCtx.login(res.data.token, res.data.exp, res.data.userId);
+          console.log(authCtx)
         })
         .catch((err) => {
           setPassword("");
@@ -44,8 +43,7 @@ const Login = () => {
         .catch((err) => {
           setPassword("");
           setUsername("");
-          setStatus(true);
-          setTitle("wrong credentials, try again bucko");
+
         });
     }
   };
@@ -68,12 +66,11 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="form-btn">{register ? "Sign Up" : "Login"}</button>
+        <button className="form-btn" onClick={() => console.log(username, password)}>{register ? "Sign Up" : "Login"}</button>
       </form>
-      <button className="form-btn" onClick={() => setRegister(!register)}>
+      <button className="form-btn" onClick={() => setRegister(!register)} >
         Need to {register ? "Login" : "Sign Up"}?
       </button>
-
     </main>
   );
 };

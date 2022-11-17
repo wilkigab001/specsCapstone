@@ -2,15 +2,13 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("../util/database");
 
 module.exports = {
-  User: sequelize.define("User", {
+  Wishlist: sequelize.define("Wishlist", {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       autoIncrement: true,
       primaryKey: true,
+      allowNull:false,
     },
-    username: DataTypes.STRING,
-    hashpass: DataTypes.STRING
+    wishlist: DataTypes.STRING,
   }),
 };
-

@@ -1,8 +1,8 @@
 const {DataTypes}= require("sequelize")
-const {sequelize} = require("sequelize")
+const {sequelize} = require("../util/database")
 
 module.exports = {
-    TravelPlan: sequelize.define("travel plan", {
+    TravelPlan: sequelize.define("travel-plan", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,

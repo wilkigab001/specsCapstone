@@ -1,12 +1,12 @@
 
 import React from 'react';
-import Header from './components/Header.js'
+import Header from './components/Header/Header.js'
 import {Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 import Profile from './components/Profile'
 import Public from './components/Public'
 import Login from './components/Login'
-import NewPost from './components/newPost';
+import NewPost from './components/newPost/newPost';
 
 function App() {
   return (
