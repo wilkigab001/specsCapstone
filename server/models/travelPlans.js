@@ -10,10 +10,9 @@ module.exports = {
             allowNull: false.value,
         },
         publicStatus: DataTypes.BOOLEAN,
-        wishlistIncluded: DataTypes.BOOLEAN,
         tripLocation: DataTypes.STRING,
         tripImg: DataTypes.TEXT,
-        weather: DataTypes.STRING,
-        dates: DataTypes.STRING
+        startDate: DataTypes.STRING,
+        endDate: DataTypes.STRING,
     })
 }

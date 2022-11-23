@@ -1,13 +1,13 @@
-import { useState, useContext } from "react";
+import { useState, useContext, } from "react";
 import axios from "axios";
 import AuthContext from "../store/authContext";
-import Button from "./Button/Button";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [register, setRegister] = useState(true);
-
+  const navigate = useNavigate()
 
   let authCtx = useContext(AuthContext);
 
@@ -29,6 +29,7 @@ const Login = () => {
           console.log(res.data);
           authCtx.login(res.data.token, res.data.exp, res.data.userId);
           console.log(authCtx)
+          navigate("/");
         })
         .catch((err) => {
           setPassword("");
@@ -39,11 +40,11 @@ const Login = () => {
         .post("http://localhost:4004/login", user)
         .then((res) => {
           console.log(res.data);
+          authCtx.login(res.data.token, res.data.exp, res.data.userId);
         })
         .catch((err) => {
           setPassword("");
           setUsername("");
-
         });
     }
   };

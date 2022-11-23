@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styles from "./Header.module.css";
 import { AiOutlineMenu, AiOutlineCloseCircle } from "react-icons/ai";
-
+import AuthContext from "../../store/authContext";
 
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const authCtx = useContext(AuthContext);
 
   return (
     <div className={styles.header}>
       <div className={styles.headerCenter}>
-        <p className={styles.text}>
-          Your Trip Planner!
-        </p>
+        <p className={styles.text}>Your Trip Planner!</p>
       </div>
       <div className={styles.menuIcon}>
         <AiOutlineMenu onClick={() => setIsMenuOpen(true)} size={25} />
@@ -47,6 +46,22 @@ const Header = () => {
                 <p className={styles.sideBarItems}>New Post</p>
               </NavLink>
             </li>
+            {authCtx.token ? (
+              <li className={styles.list}>
+                <p
+                  className={styles.sideBarItems}
+                  onClick={() => authCtx.logout()}
+                >
+                  Logout
+                </p>
+              </li>
+            ) : (
+              <li className={styles.list}>
+                <NavLink to="/auth" style={{ textDecoration: "none" }}>
+                  <p className={styles.sideBarItems}>Login</p>
+                </NavLink>
+              </li>
+            )}
           </div>
         </div>
       )}

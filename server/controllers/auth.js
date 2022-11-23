@@ -59,7 +59,7 @@ module.exports = {
       console.log(foundUser)
       if (foundUser) {
         //make sure variable names match up with the names in the models
-        const isAuthenticated = bcrypt.compareSync(password, foundUser.hashPass)
+        const isAuthenticated = bcrypt.compareSync(password, foundUser.hashpass)
         if (isAuthenticated) {
           const token = createToken(
             foundUser.dataValues.username,
