@@ -6,22 +6,24 @@ import axios from "axios";
 const Home = () => {
   const [plans, setPlans] = useState([]);
 
-  const getAllPlans = useCallback(() => {
+  const getUserPlan = () => {
     console.log("getting all plans");
     axios
       .get(`http://localhost:4004/plans`)
       .then((res) => setPlans(res.data))
       .catch((err) => console.log(err));
-  }, []);
+  };
 
   useEffect(() => {
-    getAllPlans();
+    getUserPlan();
   }, []);
+
   return (
     <div>
-      {/* <Weather></Weather> */}
       {plans.map((plan) => {
-        return <TravelCard key={plan.id} plan={plan} />;
+        return (
+          <TravelCard key={plan.id} plan={plan} getAllPlans={getUserPlan} />
+        );
       })}
     </div>
   );

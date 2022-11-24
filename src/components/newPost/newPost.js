@@ -59,24 +59,24 @@ const NewPost = () => {
         />
         <div className="flex-row status-container">
           <div className="radio-btn">
-            <label htmlFor="private-status">private:</label>
+            <label htmlFor="private-status">public:</label>
             <input
               type="radio"
               name="status"
               id="private-status"
               value={true}
               onChange={(e) => setPublicStatus(e.target.value)}
-              checked={true}
             />
           </div>
           <div className="radio-btn">
-            <label htmlFor="public-status">public:</label>
+            <label htmlFor="public-status">private:</label>
             <input
               type="radio"
               name="status"
               id="public-status"
               value={false}
               onChange={(e) => setPublicStatus(e.target.value)}
+              
             />
           </div>
         </div>

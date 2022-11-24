@@ -8,31 +8,28 @@ const Profile = () => {
   const [plans, setPlans] = useState([]);
   const {userId} = useContext(AuthContext);
 
-  const getUserPlans = useCallback(() => {
-    console.log(userId, "THis is the user id");
+  const getAllPlans = () => {
+    console.log("getting all plans");
     axios
-      .get(`http://localhost:4004/plans`)
-      .then((res) => {
-        setPlans(res.data)
-        console.log(plans)})
+      .get(`http://localhost:4004/userplans/${userId}`)
+      .then((res) => setPlans(res.data))
       .catch((err) => console.log(err));
-  }, [userId]);
+  };
 
   useEffect(() => {
-    getUserPlans();
+    getAllPlans();
   }, []);
 
   return (
     <div>
       Profile
-      {plans.filter((plan) => userId === plan.UserId ).map((plan) => {
+      {plans.map((plan) => {
         return (
           <TravelCard
             key={plan.id}
-            plan={plan} /> )
+            plan={plan} 
+            getAllPlans={getAllPlans}/> )
       })}
-      {/* //<TravelCards />
-      <Weather location = {plans.tripLocation}/>  */}
     </div>
   );
 };

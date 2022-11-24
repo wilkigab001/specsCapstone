@@ -1,42 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Weather = ({ location }) => {
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [latitude, setLatitude] = useState("Pre-call");
+  const [longitude, setLongitude] = useState("Pre-call");
+  const [weather, setWeather] = useState("Pre-set");
+  const api_key = "81d56d9fb17c6fe775b7cb7170a2cee3";
 
-  const getWeather = () => {
-    axios.get(`https://restcountries.com/v3.1/name/${location}`).then((res) => {
-      console.log(res.data);
-      setLatitude(res.data.latlng[0]);
-      setLongitude(res.data.latlng[1]);
-      console.log(latitude, 'latitude')
-      console.log(longitude, 'longitude')
-    });
-    const options = {
-      method: "GET",
-      url: "https://weatherapi-com.p.rapidapi.com/current.json",
-      params: { q: `${latitude}, ${longitude}` },
-      headers: {
-        "X-RapidAPI-Key": "5d582308cdmshae28750b7aee846p157471jsn15cdcb7db58d",
-        "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
-      },
-    };
-
+  const getCoordinates = () => {
+    console.log(location);
     axios
-      .request(options)
-      .then(function (response) {
-        console.log(response.data);
+      .get(
+        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${api_key}`
+      )
+      .then((res) => {
+        setLatitude(res.data[0].lat);
+        setLongitude(res.data[0].lon);
       })
-      .catch(function (error) {
-        console.error(error);
-      });
+      .catch((err) => console.log(err));
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${api_key}&units=imperial`
+      )
+      .then((res) => {
+        console.log("Got Weather");
+        console.log(res.data);
+        setWeather(res.data.main.temp);
+      })
+      .catch((err) => console.error(err));
   };
+
+
+  useEffect(() => {
+      getCoordinates();
+    }, [getCoordinates]);
 
   return (
     <div>
       <h3>
-        <button onClick={getWeather}></button>
+        <button onClick={getCoordinates}></button>
+        {latitude}
+        {longitude}
+        <h2>{weather} degrees fahrenheit</h2>
       </h3>
     </div>
   );

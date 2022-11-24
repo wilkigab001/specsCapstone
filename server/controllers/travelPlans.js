@@ -5,7 +5,7 @@ module.exports = {
   addPlan: async (req, res) => {
     //working
     try {
-      const { location, userId, img, startDate, endDate, publicStatus } =
+      const { location, userId, img, startDate, endDate, publicStatus, postId } =
         req.body;
       await TravelPlan.create({
         tripLocation: location,
@@ -14,6 +14,7 @@ module.exports = {
         startDate: startDate,
         endDate: endDate,
         publicStatus: publicStatus,
+        postId: postId,
       });
       res.sendStatus(200);
     } catch (err) {
@@ -45,10 +46,20 @@ module.exports = {
   editPlan: async (req, res) => {
     try {
       const { id } = req.params;
-      const { publicStatus } = req.body;
+      console.log(id)
+      const {location, userId, img , startDate, endDate, publicStatus } = req.body;
+      console.log(location, "location")
+      console.log(userId, "userId")
+      console.log(startDate, "startDate")
       await TravelPlan.update(
         {
+          tripLocation: location,
+          UserId: userId,
+          tripImg: img,
+          startDate: startDate,
+          endDate: endDate,
           publicStatus: publicStatus,
+          id
         },
         {
           where: { id: +id },
