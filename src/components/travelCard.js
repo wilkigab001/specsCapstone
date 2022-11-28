@@ -7,16 +7,18 @@ import axios from "axios";
 import AuthContext from "../store/authContext";
 import Weather from "./Weather";
 import { AiFillDelete, AiOutlineStar, AiFillStar } from "react-icons/ai";
+import styles from "./travelCard.module.css";
 
 const TravelCard = ({ plan, getAllPlans }) => {
-  const { token, userId } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
   const [editing, setEditing] = useState(false);
   const [startDate, setStartDate] = useState(plan.startDate);
   const [endDate, setEndDate] = useState(plan.endDate);
   const [location, setLocation] = useState(plan.tripLocation);
   const [image, setImage] = useState(plan.tripImg);
   const [publicStatus, setPublicStatus] = useState(true);
-  const [partOfWishlist, setPartOfWishlist] = useState(false)
+  const [partOfWishlist, setPartOfWishlist] = useState(false);
 
   const [showDate, setShowDate] = useState(false);
 
@@ -37,7 +39,7 @@ const TravelCard = ({ plan, getAllPlans }) => {
 
     const body = {
       location,
-      userId,
+      userId: authCtx.userId,
       img: image,
       startDate,
       endDate,
@@ -50,6 +52,7 @@ const TravelCard = ({ plan, getAllPlans }) => {
       .put(`/plans/${plan.id}`, body, { headers: { authorization: token } })
       .then((res) => {
         console.log(res.data);
+        setEditing(false);
         getAllPlans();
       })
       .catch((err) => console.log(err));
@@ -76,79 +79,89 @@ const TravelCard = ({ plan, getAllPlans }) => {
       });
   };
 
-  return (
-    <div>
-      {!editing ? (
-        <div>
-          {!partOfWishlist ? (
-            <div>
-              <AiOutlineStar onClick={() => setPartOfWishlist(!partOfWishlist)} />
-            </div>
-          ) : (
-            <div><AiFillStar onClick={() => setPartOfWishlist(!partOfWishlist)}/></div>
-          )}
-          <h2>{plan.tripLocation}</h2>
-          <h4>{plan.User.username}</h4>
-          <img src={plan.tripImg} />
-          <h3>{plan.startDate}</h3>
-          <h3>{plan.endDate}</h3>
-          <Weather location={plan.tripLocation}></Weather>
-          <AiFillDelete onClick={() => deletePlan(plan.id)} />
-        </div>
-      ) : (
-        <div>
-          <form onSubmit={(e) => submitHandler(e)}>
-            <input
-              type="text"
-              placeholder="Location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="url of picture to show where you are going"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-            />
-            <div className="flex-row status-container">
-              <div className="radio-btn">
-                <label htmlFor="public-status">public:</label>
-                <input
-                  type="radio"
-                  name="status"
-                  id="public-status"
-                  value={true}
-                  onChange={(e) => setPublicStatus(e.target.value)}
-                />
-              </div>
-              <div className="radio-btn">
-                <label htmlFor="private-status">private:</label>
-                <input
-                  type="radio"
-                  name="status"
-                  id="private-status"
-                  value={false}
-                  onChange={(e) => setPublicStatus(e.target.value)}
-                />
-              </div>
-            </div>
-            <button type="button" onClick={() => setShowDate(!showDate)}>
-              {showDate ? "Hide" : "Show Dates"}{" "}
-            </button>
-            {showDate && (
-              <DateRangePicker
-                ranges={[selectionRange]}
-                onChange={handleSelect}
-              />
-            )}
-            <button>submit</button>
-          </form>
-        </div>
-      )}
+  const saveToWishlist = () => {
+    console.log("Before saving to wishlist");
+    axios
+      .post("/wishlist", { UserId: authCtx.userId, planId: plan.id })
+      .then((res) => {
+        console.log(res.data);
+        console.log("success");
+      })
+      .catch((err) => console.log(err));
+    setPartOfWishlist(!partOfWishlist);
+  };
 
-      <button onClick={() => setEditing(!editing)}>
-        {editing ? "Cancel Changes" : "Make Changes"}
-      </button>
+  return (
+    <div className={styles.completeDiv}>
+      <div className={styles.containsButton}>
+        {!editing ? (
+          <div className={styles.travelCard}>
+            <div className={styles.star}>
+              <button onClick={() => saveToWishlist()}> Save Plan</button>
+            </div>
+            <h2>{plan.tripLocation}</h2>
+            <h4>{plan.User.username}</h4>
+            <img src={plan.tripImg} />
+            <h3>{plan.startDate}</h3>
+            <h3>{plan.endDate}</h3>
+            {/* <Weather location={plan.tripLocation}></Weather> */}
+            <AiFillDelete onClick={() => deletePlan(plan.id)} />
+          </div>
+        ) : (
+          <div>
+            <form onSubmit={(e) => submitHandler(e)}>
+              <input
+                type="text"
+                placeholder="Location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="url of picture to show where you are going"
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+              />
+              <div className="flex-row status-container">
+                <div className="radio-btn">
+                  <label htmlFor="public-status">public:</label>
+                  <input
+                    type="radio"
+                    name="status"
+                    id="public-status"
+                    value={true}
+                    onChange={(e) => setPublicStatus(e.target.value)}
+                  />
+                </div>
+                <div className="radio-btn">
+                  <label htmlFor="private-status">private:</label>
+                  <input
+                    type="radio"
+                    name="status"
+                    id="private-status"
+                    value={false}
+                    onChange={(e) => setPublicStatus(e.target.value)}
+                  />
+                </div>
+              </div>
+              <button type="button" onClick={() => setShowDate(!showDate)}>
+                {showDate ? "Hide" : "Show Dates"}{" "}
+              </button>
+              {showDate && (
+                <DateRangePicker
+                  ranges={[selectionRange]}
+                  onChange={handleSelect}
+                />
+              )}
+              <button>submit</button>
+            </form>
+          </div>
+        )}
+
+        <button onClick={() => setEditing(!editing)}>
+          {editing ? "Cancel Changes" : "Make Changes"}
+        </button>
+      </div>
     </div>
   );
 };

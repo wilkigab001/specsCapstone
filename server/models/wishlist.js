@@ -9,6 +9,5 @@ module.exports = {
       primaryKey: true,
       allowNull:false,
     },
-    wishlist: DataTypes.STRING,
   }),
 };

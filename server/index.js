@@ -4,9 +4,10 @@ const express = require("express");
 const cors = require("cors");
 const {TravelPlan} = require("./models/travelPlans")
 const {User} = require("./models/user")
+const {Wishlist} = require("./models/wishlist")
 
 
-const {addPlan, getAllPlans, getUserPlan, deletePlan, editPlan} = require("./controllers/travelPlans")
+const {addPlan, getAllPlans, getUserPlan, deletePlan, editPlan, addToWishlist, getMyWishlist} = require("./controllers/travelPlans")
 const {register, login} = require("./controllers/auth.js")
 const {isAuthenticated} = require("./middleware/isAuthenticated")
 const app = express();
@@ -16,6 +17,11 @@ app.use(cors());
 
 User.hasMany(TravelPlan)
 TravelPlan.belongsTo(User)
+
+User.hasMany(Wishlist)
+TravelPlan.hasMany(Wishlist)
+Wishlist.belongsTo(User)
+Wishlist.belongsTo(TravelPlan)
 
 
 
@@ -32,6 +38,9 @@ app.get("/userplans/:userId", getUserPlan);
 app.post("/plans/:userId", isAuthenticated, addPlan);
 app.put("/plans/:id", isAuthenticated, editPlan);
 app.delete("/plans/:id", isAuthenticated, deletePlan);
+
+app.post('/wishlist', addToWishlist);
+app.get('/mywishlist/:userId', getMyWishlist)
 
 sequelize.sync().then(() => {
   app.listen(SERVER_PORT, () => {

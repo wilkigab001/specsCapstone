@@ -1,12 +1,20 @@
 const { TravelPlan } = require("../models/travelPlans");
 const { User } = require("../models/User");
+const { Wishlist } = require("../models/Wishlist");
 
 module.exports = {
   addPlan: async (req, res) => {
     //working
     try {
-      const { location, userId, img, startDate, endDate, publicStatus, postId } =
-        req.body;
+      const {
+        location,
+        userId,
+        img,
+        startDate,
+        endDate,
+        publicStatus,
+        postId,
+      } = req.body;
       await TravelPlan.create({
         tripLocation: location,
         UserId: userId,
@@ -46,11 +54,12 @@ module.exports = {
   editPlan: async (req, res) => {
     try {
       const { id } = req.params;
-      console.log(id)
-      const {location, userId, img , startDate, endDate, publicStatus } = req.body;
-      console.log(location, "location")
-      console.log(userId, "userId")
-      console.log(startDate, "startDate")
+      console.log(id);
+      const { location, userId, img, startDate, endDate, publicStatus } =
+        req.body;
+      console.log(location, "location");
+      console.log(userId, "userId");
+      console.log(startDate, "startDate");
       await TravelPlan.update(
         {
           tripLocation: location,
@@ -59,7 +68,7 @@ module.exports = {
           startDate: startDate,
           endDate: endDate,
           publicStatus: publicStatus,
-          id
+          id,
         },
         {
           where: { id: +id },
@@ -119,6 +128,41 @@ module.exports = {
       console.log(err);
       console.log("Error in getting posts");
       res.sendStatus(400);
+    }
+  },
+
+  addToWishlist: async (req, res) => {
+    try {
+      const { UserId, planId } = req.body;
+      console.log(UserId, 'user', planId, 'plan')
+      await Wishlist.create({ UserId, planId });
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+      res.sendStatus(500);
+    }
+  },
+
+  getMyWishlist: async (req, res) => {
+    try {
+      const { userId } = req.params;
+      console.log(userId)
+      const wishlist = await Wishlist.findAll({
+        where: { userId },
+        include: [{
+          model: TravelPlan,
+          required: true,
+          include: {
+            model: User,
+            required: true,
+            attributes: ["username"],
+          }
+        }],
+      });
+      res.status(200).send(wishlist);
+    } catch (err) {
+      console.log(err);
+      res.sendStatus(500);
     }
   },
 };

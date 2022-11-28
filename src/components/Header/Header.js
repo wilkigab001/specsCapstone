@@ -37,11 +37,6 @@ const Header = () => {
               </NavLink>
             </li>
             <li className={styles.list}>
-              <NavLink to="/public" style={{ textDecoration: "none" }}>
-                <p className={styles.sideBarItems}>Public</p>
-              </NavLink>
-            </li>
-            <li className={styles.list}>
               <NavLink to="/form" style={{ textDecoration: "none" }}>
                 <p className={styles.sideBarItems}>New Post</p>
               </NavLink>

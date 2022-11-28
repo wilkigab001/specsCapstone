@@ -2,26 +2,39 @@ import React, { useContext, useState, useCallback, useEffect } from "react";
 import TravelCard from "./travelCard";
 import axios from "axios";
 import AuthContext from "../store/authContext";
-import Weather from "./Weather";
+import styles from './Profile.module.css'
 
 const Profile = () => {
   const [plans, setPlans] = useState([]);
-  const {userId} = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
+  const [myWishlist, setMyWishlist] = useState([]);
 
   const getAllPlans = () => {
     console.log("getting all plans");
     axios
-      .get(`http://localhost:4004/userplans/${userId}`)
+      .get(`http://localhost:4004/userplans/${authCtx.userId}`)
       .then((res) => setPlans(res.data))
       .catch((err) => console.log(err));
   };
 
+
+  const getWishlist = () => {
+    console.log('getwishlist call')
+    axios.get(`/mywishlist/${authCtx.userId}`)
+    .then((res) => {
+      console.log(res.data)
+      setMyWishlist(res.data)
+    })
+    .catch(err => console.log(err))
+  }
+
   useEffect(() => {
     getAllPlans();
+    getWishlist();
   }, []);
 
   return (
-    <div>
+    <div className={styles.profileDiv}>
       Profile
       {plans.map((plan) => {
         return (
@@ -29,6 +42,16 @@ const Profile = () => {
             key={plan.id}
             plan={plan} 
             getAllPlans={getAllPlans}/> )
+      })}
+
+      <h2> wishlist</h2>
+      {myWishlist.map((plan) => {
+        return (
+          <TravelCard
+          plan={plan.plan}
+          getAllPlans={getWishlist}
+          />
+        )
       })}
     </div>
   );
