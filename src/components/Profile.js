@@ -9,7 +9,7 @@ const Profile = () => {
   const authCtx = useContext(AuthContext);
   const [myWishlist, setMyWishlist] = useState([]);
 
-  const getAllPlans = () => {
+  const getAllPlans = async() => {
     console.log("getting all plans");
     axios
       .get(`http://localhost:4004/userplans/${authCtx.userId}`)
@@ -20,17 +20,19 @@ const Profile = () => {
 
   const getWishlist = () => {
     console.log('getwishlist call')
-    axios.get(`/mywishlist/${authCtx.userId}`)
+    axios.get(`http://localhost:4004/mywishlist/${authCtx.userId}`)
     .then((res) => {
       console.log(res.data)
       setMyWishlist(res.data)
     })
     .catch(err => console.log(err))
   }
-
+  const getData = async() => {
+    // await getAllPlans()
+    getWishlist()
+  }
   useEffect(() => {
-    getAllPlans();
-    getWishlist();
+    getData()
   }, []);
 
   return (

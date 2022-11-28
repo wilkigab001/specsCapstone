@@ -1,0 +1,7 @@
+.homeDiv{
+    display: flex;
+    padding: 30px;
+    justify-content: space-evenly;
+    align-items: center;
+    overflow: hidden;
+}

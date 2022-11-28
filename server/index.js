@@ -18,12 +18,13 @@ app.use(cors());
 User.hasMany(TravelPlan)
 TravelPlan.belongsTo(User)
 
+
+// TravelPlan.belongsToMany(User, {through: Wishlist})
+
 User.hasMany(Wishlist)
 TravelPlan.hasMany(Wishlist)
 Wishlist.belongsTo(User)
 Wishlist.belongsTo(TravelPlan)
-
-
 
 const { sequelize } = require("./util/database");
 

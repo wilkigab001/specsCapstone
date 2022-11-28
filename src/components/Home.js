@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import TravelCard from "./travelCard";
 import Weather from "./Weather";
 import axios from "axios";
-
+import styles from './Home.module.css'
 const Home = () => {
   const [plans, setPlans] = useState([]);
 
@@ -19,7 +19,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className = {styles.homeDiv}>
       {plans.map((plan) => {
         return (
           <TravelCard key={plan.id} plan={plan} getAllPlans={getUserPlan} />

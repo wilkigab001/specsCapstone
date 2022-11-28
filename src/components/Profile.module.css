@@ -1,0 +1,6 @@
+.profileDiv{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
+    flex-direction: row;
+}

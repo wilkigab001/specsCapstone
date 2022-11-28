@@ -135,7 +135,7 @@ module.exports = {
     try {
       const { UserId, planId } = req.body;
       console.log(UserId, 'user', planId, 'plan')
-      await Wishlist.create({ UserId, planId });
+      await Wishlist.create({ userId: UserId, travelPlanId: planId });
       res.sendStatus(200);
     } catch (err) {
       console.log(err);
@@ -151,12 +151,12 @@ module.exports = {
         where: { userId },
         include: [{
           model: TravelPlan,
-          required: true,
-          include: {
-            model: User,
-            required: true,
-            attributes: ["username"],
-          }
+          // required: true,
+          // include: {
+          //   model: User,
+          //   required: true,
+          //   attributes: ["username"],
+          // }
         }],
       });
       res.status(200).send(wishlist);
