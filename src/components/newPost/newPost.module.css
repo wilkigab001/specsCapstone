@@ -1,3 +1,69 @@
-.profileDiv{
+.completeDiv{
     display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    border: 2px solid rgba(3, 138, 255, 0.5);
+    flex-direction: column;
+    padding: 20px;
+    margin: 30px;
+    border-radius: 10px;
+    box-shadow: rgba(3, 138, 255, 0.4) 5px 5px, rgba(3, 138, 255, 0.3) 10px 10px, rgba(3, 138, 255, 0.2) 15px 15px, rgba(3, 138, 255, 0.1) 20px 20px, rgba(3, 138, 255, 0.05) 25px 25px;;
+}
+
+h2{
+    font-size: 25px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+.inputDiv {
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    margin-top: 5px;
+}
+
+input{
+    padding: 10px;
+    margin-bottom: 10px;
+    margin: 5px;
+    border: none;
+    border-bottom: 2px solid rgba(3, 138, 255, 0.5);
+}
+
+.radioBtnContainer {
+    text-align: center;
+    align-items: center;
+    margin: 10px;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.radioBtn{
+    display: block;
+    flex-direction: row;
+    letter-spacing: .2em;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.buttonDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.dates{
+    width: fit-content;
+    align-items: center;
+    text-align: center;
+    background-color: #b5e2fa;
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+    position: relative;
 }

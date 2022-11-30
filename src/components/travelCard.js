@@ -88,42 +88,68 @@ const TravelCard = ({ plan, getAllPlans }) => {
         console.log("success");
       })
       .catch((err) => console.log(err));
-    setPartOfWishlist(!partOfWishlist);
+    setPartOfWishlist(true);
   };
 
   return (
-    <div className={styles.completeDiv}>
-      <div className={styles.containsButton}>
-        {!editing ? (
-          <div className={styles.travelCard}>
-            <div className={styles.star}>
-              <button onClick={() => saveToWishlist()}> Save Plan</button>
-            </div>
-            <h2>{plan.tripLocation}</h2>
-            <h4>{plan.User.username}</h4>
-            <img src={plan.tripImg} />
-            <h3>{plan.startDate}</h3>
-            <h3>{plan.endDate}</h3>
-            {/* <Weather location={plan.tripLocation}></Weather> */}
-            <AiFillDelete onClick={() => deletePlan(plan.id)} />
+    <div className={styles.containsButton}>
+      {!editing ? (
+        <div className={styles.travelCard}>
+          <div className={styles.star}>
+            {!partOfWishlist ? (
+              <AiOutlineStar
+                className={styles.starDiv}
+                size={25}
+                onClick={() => saveToWishlist()}
+              />
+            ) : (
+              <AiFillStar className={styles.starDiv} size={25} />
+            )}
           </div>
-        ) : (
-          <div>
-            <form onSubmit={(e) => submitHandler(e)}>
-              <input
-                type="text"
-                placeholder="Location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="url of picture to show where you are going"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              />
-              <div className="flex-row status-container">
-                <div className="radio-btn">
+          <h2 className={styles.location}>{plan.tripLocation}</h2>
+          <h4 className={styles.username}>
+            {plan.User ? plan.User.username : plan.travelplan.User.username}'s
+            vacation
+          </h4>
+          {plan.tripImg ? <img src={plan.tripImg} /> : "No Image"}
+          <h3 className={styles.dates}>
+            Leaving: {plan.startDate.substring(0, 10)}
+          </h3>
+          <h3 className={styles.dates}>
+            Coming Home: {plan.endDate.substring(0, 10)}
+          </h3>
+          <Weather location={plan.tripLocation}></Weather>
+          <div className={styles.delete}>
+            <AiFillDelete
+              size={25}
+              className={styles.deleteIcon}
+              onClick={() => deletePlan(plan.id)}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className={styles.completeDiv}>
+          <form onSubmit={(e) => submitHandler(e)}>
+            <div className={styles.form}>
+              <h2>Fix The Plan</h2>
+              <div className={styles.inputDiv}>
+                <input
+                  className={styles.inputInput}
+                  type="text"
+                  placeholder="Location"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                />
+                <input
+                  className={styles.inputInput}
+                  type="text"
+                  placeholder="url of picture to show where you are going"
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                />
+              </div>
+              <div className={styles.radioBtnContainer}>
+                <div className={styles.radioBtn}>
                   <label htmlFor="public-status">public:</label>
                   <input
                     type="radio"
@@ -133,7 +159,7 @@ const TravelCard = ({ plan, getAllPlans }) => {
                     onChange={(e) => setPublicStatus(e.target.value)}
                   />
                 </div>
-                <div className="radio-btn">
+                <div className={styles.radioBtn}>
                   <label htmlFor="private-status">private:</label>
                   <input
                     type="radio"
@@ -144,21 +170,32 @@ const TravelCard = ({ plan, getAllPlans }) => {
                   />
                 </div>
               </div>
-              <button type="button" onClick={() => setShowDate(!showDate)}>
-                {showDate ? "Hide" : "Show Dates"}{" "}
-              </button>
-              {showDate && (
-                <DateRangePicker
-                  ranges={[selectionRange]}
-                  onChange={handleSelect}
-                />
-              )}
-              <button>submit</button>
-            </form>
-          </div>
-        )}
-
-        <button onClick={() => setEditing(!editing)}>
+              <div className={styles.datesBtnDiv}>
+                <div className={styles.aboveDatesBtn}>
+                  <button
+                    className={styles.datesBtn}
+                    type="button"
+                    onClick={() => setShowDate(!showDate)}
+                  >
+                    {showDate ? "Hide" : "Show Dates"}{" "}
+                  </button>
+                  {showDate && (
+                    <DateRangePicker
+                      ranges={[selectionRange]}
+                      onChange={handleSelect}
+                    />
+                  )}
+                </div>
+                <div className={styles.submitBtn}>
+                  <button className={styles.datesBtn}>submit</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      )}
+      <div className={styles.buttonDiv}>
+        <button className={styles.button} onClick={() => setEditing(!editing)}>
           {editing ? "Cancel Changes" : "Make Changes"}
         </button>
       </div>

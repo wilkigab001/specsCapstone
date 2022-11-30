@@ -1,6 +1,6 @@
 const { TravelPlan } = require("../models/travelPlans");
-const { User } = require("../models/User");
-const { Wishlist } = require("../models/Wishlist");
+const { User } = require("../models/user");
+const { Wishlist } = require("../models/wishlist");
 
 module.exports = {
   addPlan: async (req, res) => {
@@ -9,7 +9,7 @@ module.exports = {
       const {
         location,
         userId,
-        img,
+        image,
         startDate,
         endDate,
         publicStatus,
@@ -18,7 +18,7 @@ module.exports = {
       await TravelPlan.create({
         tripLocation: location,
         UserId: userId,
-        tripImg: img,
+        tripImg: image,
         startDate: startDate,
         endDate: endDate,
         publicStatus: publicStatus,
@@ -135,7 +135,8 @@ module.exports = {
     try {
       const { UserId, planId } = req.body;
       console.log(UserId, 'user', planId, 'plan')
-      await Wishlist.create({ userId: UserId, travelPlanId: planId });
+      await Wishlist.create({ UserId, travelplanId: planId });
+      console.log('Added To Wishlist')
       res.sendStatus(200);
     } catch (err) {
       console.log(err);
@@ -148,15 +149,15 @@ module.exports = {
       const { userId } = req.params;
       console.log(userId)
       const wishlist = await Wishlist.findAll({
-        where: { userId },
+        where: { UserId: userId },
         include: [{
           model: TravelPlan,
-          // required: true,
-          // include: {
-          //   model: User,
-          //   required: true,
-          //   attributes: ["username"],
-          // }
+          required: true,
+          include: [{
+            model: User,
+            required: true,
+            attributes: ["username"],
+          }]
         }],
       });
       res.status(200).send(wishlist);

@@ -4,7 +4,7 @@ import axios from "axios";
 const Weather = ({ location }) => {
   const [latitude, setLatitude] = useState("Pre-call");
   const [longitude, setLongitude] = useState("Pre-call");
-  const [weather, setWeather] = useState("Pre-set");
+  const [weather, setWeather] = useState("");
   const api_key = "81d56d9fb17c6fe775b7cb7170a2cee3";
 
   const getCoordinates = () => {
@@ -38,10 +38,7 @@ const Weather = ({ location }) => {
   return (
     <div>
       <h3>
-        <button onClick={getCoordinates}></button>
-        {latitude}
-        {longitude}
-        <h2>{weather} degrees fahrenheit</h2>
+        <p>{weather? (`${weather} degrees fahrenheit`): ("No weather available for this location")} </p>
       </h3>
     </div>
   );

@@ -11,19 +11,5 @@ module.exports = {
       primaryKey: true,
       allowNull:false,
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: User,
-        key: "id"
-    }},
-    travelPlanId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: TravelPlan,
-        key: "id"
-    }}
   }),
 };

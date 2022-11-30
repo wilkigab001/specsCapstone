@@ -19,7 +19,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className = {styles.homeDiv}>
+    <div className={styles.homeDiv}>
       {plans.map((plan) => {
         return (
           <TravelCard key={plan.id} plan={plan} getAllPlans={getUserPlan} />

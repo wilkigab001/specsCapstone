@@ -1,0 +1,61 @@
+.letsFlex {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.loginDiv{
+    box-shadow: rgba(3, 138, 255, 0.4) 0px 5px, rgba(3, 138, 255, 0.3) 0px 10px, rgba(3, 138, 255, 0.2) 0px 15px, rgba(3, 138, 255, 0.1) 0px 20px, rgba(3, 138, 255, 0.05) 0px 25px;
+    border: 2px solid rgba(3, 138, 255, .4);
+    display: flex;
+    height: 40vh;
+    width: 33vw;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    margin: 100px;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+input{
+    text-align: center;
+    outline: none;
+}
+
+.button{
+    width: fit-content;
+    align-items: center;
+    text-align: center;
+    background-color: #b5e2fa;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+    border: 1px solid lightgray;
+    cursor: pointer;
+}
+
+.buttonRegister{
+    width: fit-content;
+    align-items: center;
+    text-align: center;
+    background-color: #b5e2fa;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+    border: 1px solid lightgray;
+    cursor: pointer;
+    margin-top: -20px;
+}
+
+.formButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 25px;
+    margin-bottom: 0px
+}
