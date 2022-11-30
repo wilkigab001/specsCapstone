@@ -6,8 +6,10 @@ import { DateRangePicker } from "react-date-range";
 import axios from "axios";
 import AuthContext from "../../store/authContext";
 import Button from "../Button/Button";
-
+import { useNavigate } from "react-router-dom";
 const NewPost = () => {
+  const navigate = useNavigate();
+
   const { token, userId } = useContext(AuthContext);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -21,7 +23,7 @@ const NewPost = () => {
     console.log(ranges);
     setStartDate(ranges.selection.startDate);
     setEndDate(ranges.selection.endDate);
-    console.log(startDate)
+    console.log(startDate);
   };
 
   const submitHandler = (e) => {
@@ -35,6 +37,7 @@ const NewPost = () => {
         },
       }
     );
+    navigate("/");
   };
 
   const selectionRange = {
@@ -99,7 +102,11 @@ const NewPost = () => {
               />
             )}
           </div>
-          <Button text={"Submit"}></Button>
+          <div className={styles.buttonDiv}>
+            <button text={"Submit"} className={styles.dates}>
+              Create!
+            </button>
+          </div>
         </div>
       </form>
     </div>

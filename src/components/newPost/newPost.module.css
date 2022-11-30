@@ -58,6 +58,7 @@ input{
 }
 
 .dates{
+    margin: 10px;
     width: fit-content;
     align-items: center;
     text-align: center;
@@ -66,4 +67,5 @@ input{
     border-radius: 8px;
     padding: 5px;
     position: relative;
+    border: 1px solid black ;
 }
