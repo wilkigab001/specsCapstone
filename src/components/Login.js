@@ -48,6 +48,7 @@ const Login = () => {
           setUsername("");
         });
     }
+    navigate('/')
   };
 
   return (

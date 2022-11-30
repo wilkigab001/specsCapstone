@@ -13,10 +13,10 @@ const Header = () => {
     <div>
       {authCtx.token ? (
         <div className={styles.header}>
-          <div className={styles.headerCenter}>
+          <div className={`${styles.headerCenter} ${styles.divBreaker}`}>
             <p className={styles.text}>Your Trip Planner!</p>
           </div>
-          <div className={styles.menuIcon}>
+          <div className={`${styles.menuIcon} ${styles.divBreaker}`}>
             <AiOutlineMenu onClick={() => setIsMenuOpen(true)} size={25} />
           </div>
           {isMenuOpen && (
@@ -29,17 +29,17 @@ const Header = () => {
               </div>
               <div className={styles.buttons}>
                 <li className={styles.list}>
-                  <NavLink to="/" style={{ textDecoration: "none" }}>
+                  <NavLink to="/" style={{ textDecoration: "none" }} onClick={() => setIsMenuOpen(false)}>
                     <p className={styles.sideBarItems}>Home</p>
                   </NavLink>
                 </li>
                 <li className={styles.list}>
-                  <NavLink to="/profile" style={{ textDecoration: "none" }}>
+                  <NavLink to="/profile" style={{ textDecoration: "none" }} onClick={() => setIsMenuOpen(false)}>
                     <p className={styles.sideBarItems}>Profile</p>
                   </NavLink>
                 </li>
                 <li className={styles.list}>
-                  <NavLink to="/form" style={{ textDecoration: "none" }}>
+                  <NavLink to="/form" style={{ textDecoration: "none" }} onClick={() => setIsMenuOpen(false)}>
                     <p className={styles.sideBarItems}>New Post</p>
                   </NavLink>
                 </li>

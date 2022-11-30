@@ -44,7 +44,7 @@ const Profile = () => {
           );
         })}
       </div>
-        <h2> wishlist</h2>
+        <h2 className={styles.someday}> future travels! </h2>
       <div className={styles.profileDiv}>
         {myWishlist.map((plan) => {
           return (
